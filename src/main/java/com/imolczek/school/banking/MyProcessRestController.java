@@ -2,16 +2,16 @@ package com.imolczek.school.banking;
 
 import java.util.Map;
 
-import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.FormService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,8 +37,8 @@ public class MyProcessRestController {
 	}
 	
 	@PostMapping("/submit-customer-identity/{processInstanceId}")
-	public String submitCustomerIdentity(@PathVariable String processInstanceId, @RequestBody CustomerIdentity customerIdentity) {
-	    UserTask task = (UserTask) taskService.createTaskQuery()
+	public String submitCustomerIdentity(@PathVariable String processInstanceId, @ModelAttribute CustomerIdentity customerIdentity) {
+	    Task task = taskService.createTaskQuery()
 	    	      .processInstanceId(processInstanceId)
 	    	      .taskDefinitionKey("customerIdentity")
 	    	      .singleResult();
@@ -47,7 +47,7 @@ public class MyProcessRestController {
 	    
 		formService.submitTaskFormData(task.getId(), customerIdentityDataMap);
 	    
-		return null;
+		return "Submitted data: " + customerIdentityDataMap.get("firstName") + " " + customerIdentityDataMap.get("lastName");
 	}
 	
 }
