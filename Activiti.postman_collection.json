@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "ca6dd2e8-596a-4489-acbb-19b98408be90",
+		"name": "Activiti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create lead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "firstName",
+							"value": "Fabian",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Bouché",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "fabian.bouche@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/create-lead",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-lead"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit customer information",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "income",
+							"value": "40000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/submit-customer-information/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"submit-customer-information",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit credit proposition",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "loanAmount",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "loanDuration",
+							"value": "36",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/submit-credit-proposition/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"submit-credit-proposition",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/approve/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"approve",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
