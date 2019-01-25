@@ -1,4 +1,4 @@
-package com.imolczek.school.banking;
+package com.imolczek.school.banking.activiti;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
