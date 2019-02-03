@@ -1,5 +1,6 @@
 package com.imolczek.school.banking.activiti;
 
+import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.FormService;
@@ -8,6 +9,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,5 +106,18 @@ public class MyProcessRestController {
 	    
 		return "Denied credit request";
 	}
+	
+	@GetMapping("/list")
+	public String getProcessInstances() {
+		List<ProcessInstance> instancesList = runtimeService.createProcessInstanceQuery().list();
+		return new Integer(instancesList.size()).toString();
+	}
 
+	@GetMapping("/consult/{processInstanceId}")
+	public String getProcessInstanceDetails(@PathVariable String processInstanceId) {
+		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+		
+		return (String) runtimeService.getVariable(processInstanceId, "email");
+	}
+	
 }
