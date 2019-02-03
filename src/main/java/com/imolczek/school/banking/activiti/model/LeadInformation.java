@@ -33,12 +33,4 @@ public class LeadInformation {
 		this.email = email;
 	}
 
-	public Map<String, String> getLeadInformationDataMap() {
-		Map<String, String> leadInformationDataMap = new HashMap<String, String> ();
-		leadInformationDataMap.put("firstName", this.firstName);
-		leadInformationDataMap.put("lastName", this.lastName);
-		leadInformationDataMap.put("email", this.email);
-		return leadInformationDataMap;
-	}
-
 }

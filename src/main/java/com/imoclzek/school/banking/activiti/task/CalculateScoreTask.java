@@ -20,6 +20,8 @@ public class CalculateScoreTask implements JavaDelegate {
 		} else if (riskAmount + loanAmount > yearlyIncome / 5) {
 			execution.setVariable("denied", true);
 		}
+
+		execution.setVariable("scored", true);
 		
 	}
 

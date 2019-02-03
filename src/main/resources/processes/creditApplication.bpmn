@@ -28,13 +28,12 @@
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <sequenceFlow id="flow5" sourceRef="riskDBLookup" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="creditPropositionTask" targetRef="parallelgateway2"></sequenceFlow>
-    <endEvent id="endevent1" name="End"></endEvent>
+    <endEvent id="deniedEvent" name="Denied"></endEvent>
     <sequenceFlow id="flow7" sourceRef="parallelgateway2" targetRef="servicetask1"></sequenceFlow>
     <serviceTask id="riskDBLookup" name="Lookup Risk DB" activiti:class="com.imoclzek.school.banking.activiti.task.LookupDBTask"></serviceTask>
     <sequenceFlow id="flow9" sourceRef="customerInformationTask" targetRef="riskDBLookup"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="noDecisionFlow"></exclusiveGateway>
-    <serviceTask id="servicetask1" name="Calculate Risk
-score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreTask"></serviceTask>
+    <serviceTask id="servicetask1" name="Calculate Risk score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreTask"></serviceTask>
     <sequenceFlow id="flow10" sourceRef="servicetask1" targetRef="exclusivegateway1"></sequenceFlow>
     <serviceTask id="approvalTask" name="Approve request" activiti:class="com.imoclzek.school.banking.activiti.task.ApproveTask"></serviceTask>
     <sequenceFlow id="acceptedFlow" name="Accepted" sourceRef="exclusivegateway1" targetRef="approvalTask">
@@ -52,8 +51,9 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
     <sequenceFlow id="flow15" sourceRef="humanDecisionTask" targetRef="denyRequest">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${denied}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow16" sourceRef="approvalTask" targetRef="endevent1"></sequenceFlow>
-    <sequenceFlow id="flow17" sourceRef="denyRequest" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow17" sourceRef="denyRequest" targetRef="deniedEvent"></sequenceFlow>
+    <endEvent id="acceptedEvent" name="Accepted"></endEvent>
+    <sequenceFlow id="flow18" sourceRef="approvalTask" targetRef="acceptedEvent"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_creditApplicationProcess">
     <bpmndi:BPMNPlane bpmnElement="creditApplicationProcess" id="BPMNPlane_creditApplicationProcess">
@@ -75,8 +75,8 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="990.0" y="417.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="1450.0" y="420.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="deniedEvent" id="BPMNShape_deniedEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="1450.0" y="518.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="riskDBLookup" id="BPMNShape_riskDBLookup">
         <omgdc:Bounds height="71.0" width="131.0" x="840.0" y="330.0"></omgdc:Bounds>
@@ -95,6 +95,9 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="humanDecisionTask" id="BPMNShape_humanDecisionTask">
         <omgdc:Bounds height="75.0" width="105.0" x="1306.0" y="400.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="acceptedEvent" id="BPMNShape_acceptedEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="1456.0" y="302.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="355.0" y="437.0"></omgdi:waypoint>
@@ -141,7 +144,7 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
         <omgdi:waypoint x="1200.0" y="319.0"></omgdi:waypoint>
         <omgdi:waypoint x="1306.0" y="319.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="1130.0" y="305.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="55.0" x="1130.0" y="305.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="deniedFlow" id="BPMNEdge_deniedFlow">
@@ -149,14 +152,14 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
         <omgdi:waypoint x="1200.0" y="537.0"></omgdi:waypoint>
         <omgdi:waypoint x="1306.0" y="535.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="1141.0" y="548.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="40.0" x="1141.0" y="548.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="noDecisionFlow" id="BPMNEdge_noDecisionFlow">
         <omgdi:waypoint x="1220.0" y="437.0"></omgdi:waypoint>
         <omgdi:waypoint x="1306.0" y="437.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="1220.0" y="437.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="70.0" x="1220.0" y="437.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
@@ -167,13 +170,13 @@ score" activiti:class="com.imoclzek.school.banking.activiti.task.CalculateScoreT
         <omgdi:waypoint x="1358.0" y="475.0"></omgdi:waypoint>
         <omgdi:waypoint x="1358.0" y="508.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
-        <omgdi:waypoint x="1358.0" y="347.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1467.0" y="420.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
-        <omgdi:waypoint x="1358.0" y="508.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1467.0" y="455.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1411.0" y="535.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1450.0" y="535.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="1411.0" y="319.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1456.0" y="319.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

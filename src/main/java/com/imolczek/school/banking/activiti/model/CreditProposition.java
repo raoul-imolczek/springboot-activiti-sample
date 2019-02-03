@@ -24,11 +24,4 @@ public class CreditProposition {
 		this.loanDuration = loanDuration;
 	}
 
-	public Map<String, String> getCreditPropositionDataMap() {
-		Map<String, String> creditPropositionDataMap = new HashMap<String, String> ();
-		creditPropositionDataMap.put("loanAmount", Long.toString(this.loanAmount));
-		creditPropositionDataMap.put("loanDuration", Long.toString(this.loanDuration));
-		return creditPropositionDataMap;
-	}
-
 }

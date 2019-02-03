@@ -15,10 +15,4 @@ public class CustomerInformation {
 		this.income = income;
 	}
 
-	public Map<String, String> getInformationDataMap() {
-		Map<String, String> customerInformationDataMap = new HashMap<String, String> ();
-		customerInformationDataMap.put("income", Long.toString(this.income));
-		return customerInformationDataMap;
-	}
-
 }
